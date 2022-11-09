@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Register</title>
+</head>
+<body>
+<h1>
+    Register
+</h1>
+<form action="/register" method="post">
+    {% if data %} <!-- If there is data, display it -->
+        <p style="color: red;">{{ data }}</p>
+    {% endif %}
+    <label for="username">Username</label>
+    <input type="text" name="username" id="username">
+    <label for="email">Email</label>
+    <input type="email" name="email" id="email">
+    <label for="password">Password</label>
+    <input type="password" name="password" id="password">
+    <label for="password2">Confirm Password</label>
+    <input type="password" name="password2" id="password2">
+    <input type="submit" value="Register">
+</form>
+</body>
+</html>
