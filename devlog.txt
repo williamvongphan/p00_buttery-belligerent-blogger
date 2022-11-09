@@ -1,0 +1,38 @@
+       ▄▄                      ▄▄▄▄
+       ██                      ▀▀██
+  ▄███▄██   ▄████▄   ██▄  ▄██    ██       ▄████▄    ▄███▄██
+ ██▀  ▀██  ██▄▄▄▄██   ██  ██     ██      ██▀  ▀██  ██▀  ▀██
+ ██    ██  ██▀▀▀▀▀▀   ▀█▄▄█▀     ██      ██    ██  ██    ██
+ ▀██▄▄███  ▀██▄▄▄▄█    ████      ██▄▄▄   ▀██▄▄██▀  ▀██▄▄███
+   ▀▀▀ ▀▀    ▀▀▀▀▀      ▀▀        ▀▀▀▀     ▀▀▀▀     ▄▀▀▀ ██
+                                                    ▀████▀▀
+
+===========================================================
+
+	Team Buttery Belligerent Bloggers
+	 - William Vongphanith
+	 - Julia Lee
+	 - Jeffrey Zou
+
+===========================================================
+
+	2022-11-01
+		- William Vongphanith:
+	    	- Initialize the project.
+	    	- Create the README.md file.
+			- Contribute to design document.
+
+		- Julia Lee:
+			- Contribute to design document.
+			- Draw charts
+
+		- Jeffrey Zou:
+			- Contribute to design document.
+
+===========================================================
+
+	2022-11-08
+		- William Vongphanith:
+			- Create devlog
+			- Major work on login/logout functionality
+			- Basic blog work

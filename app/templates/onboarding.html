@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Onboarding</title>
+</head>
+<body>
+<h1>
+    Onboarding
+</h1>
+<p>
+    Please tell us a little about yourself before your account is created.
+</p>
+<form action="/onboarding" method="post">
+    {% if data %} <!-- If there is data, display it -->
+        <p style="color: red;">{{ data }}</p>
+    {% endif %}
+    <label for="first_name">First Name</label>
+    <input type="text" name="first_name" id="first_name">
+    <label for="last_name">Last Name</label>
+    <input type="text" name="last_name" id="last_name">
+    <label for="pfp_url">Profile Picture URL</label>
+    <input type="text" name="pfp_url" id="pfp_url">
+    <input type="submit" value="Submit">
+</form>
+</body>
+</html>

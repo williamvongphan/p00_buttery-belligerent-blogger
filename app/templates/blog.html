@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ blog[1] }}</title>
+</head>
+<body>
+{% if user_id == blog[6] %}
+    <a href="/blog/{{ blog[0] }}/newpost">New Post</a>
+{% endif %}
+<h1>
+    {{ blog[1] }}
+</h1>
+<h2>
+    {{ blog[3] }}
+</h2>
+<p>
+    {{ blog[4] }}
+</p>
+<!-- For each post in the blog, display the title and the content -->
+{% if blog[5] %}
+{% for post in blog[5] %}
+    <h3>
+        {{ post[1] }}
+    </h3>
+    <p>
+        {{ post[5] }}
+    </p>
+{% endfor %}
+{% else %}
+    <p>
+        No posts yet.
+    </p>
+{% endif %}
+</body>
+</html>

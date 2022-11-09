@@ -2,19 +2,31 @@
 <html>
 <head>
     <title>Buttery Belligerent Bloggers</title>
-    <link rel="stylesheet" href="/static/css/placeholder.css">
 </head>
 <body>
-    <h1>Buttery Belligerent Bloggers</h1>
-    <p>A website that allows anyone, including you, to
-        get their thoughts out there for the world to see.</p>
-    <p><button onclick="window.open('https://github.com/williamvongphan/p00_buttery-belligerent-blogger', '_blank');" class="button">GitHub
-        <svg class="hover-arrow" width="10" height="10" viewBox="0 0 10 10" aria-hidden="true">
-        <g fill-rule="evenodd">
-          <path class="hover-arrow-line-path" d="M0 5h7"></path>
-          <path class="hover-arrow-tip-path" d="M1 1l4 4-4 4"></path>
-        </g>
-      </svg></button></p>
-    <p>The time was {{ time_now }} (UTC) when you loaded this page.</p>
-    <p>The distance between latitude-longitude coordinates {{ lat1 }}, {{ lon1 }} and {{ lat2 }}, {{ lon2 }} is {{ haversine }} miles.</p>
+<h1>
+    BBB Homepage
+</h1>
+{% if username %}
+    <h2>
+        Welcome, {{ username }}!
+    </h2>
+{% endif %}
+<p>
+    Welcome to the Buttery Belligerent Bloggers homepage. We are a website where anyone, especially those who are
+    belligerent and like butter, can post their thoughts and opinions on a variety of topics.
+</p>
+<!-- Jinja template code, if user is logged in, show the logout button -->
+{% if username %}
+    <a href="{{ url_for('logout') }}">Logout</a>
+{% endif %}
+<!-- Jinja template code, if user is not logged in, show the login button -->
+{% if not username %}
+    <a href="{{ url_for('login') }}">Login</a>
+    <a href="{{ url_for('register') }}">Register</a>
+{% endif %}
+
+{% if username %}
+    <a href="{{ url_for('my_blog') }}">My Blog</a>
+{% endif %}
 </body>

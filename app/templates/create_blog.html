@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create a blog</title>
+</head>
+<body>
+<h1>
+    Create a blog
+</h1>
+<p>
+    Congratulations! You're this close to being able to post your thoughts and opinions on a variety of topics. Please
+    enter some information about your blog below, and then you'll be ready to start posting!
+</p>
+<form action="/blog/create" method="post">
+    {% if data %} <!-- If there is data, display it -->
+        <p style="color: red;">{{ data }}</p>
+    {% endif %}
+    <label for="title">Blog Title</label>
+    <input type="text" name="title" id="title" required>
+    <label for="subtitle">Blog Subtitle</label>
+    <input type="text" name="subtitle" id="subtitle" required>
+    <label for="description">Blog Description</label>
+    <input type="text" name="description" id="description" required>
+    <input type="submit" value="Create Blog">
+</form>
+</body>
+</html>
