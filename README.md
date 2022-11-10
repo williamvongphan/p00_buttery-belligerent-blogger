@@ -16,4 +16,5 @@ Lauch codes:
     3. In your new directory, run activate using ```$. bin/activate```. You should now see (directory name) at the start of your command line.
     4. pip install flask
     5. When you wish to, you can ```deactivate```
-3. 
+- Make sure you are in the app directory before proceeding.
+3. Run seed.py before running __init__.py. 
