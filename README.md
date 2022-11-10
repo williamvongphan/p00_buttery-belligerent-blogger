@@ -13,4 +13,7 @@ Lauch codes:
 2. Set up your virtual environment
     1. Make a directory.
     2. python3 -m venv [directory name].
-    3. 
+    3. In your new directory, run activate using ```$. bin/activate```. You should now see (directory name) at the start of your command line.
+    4. pip install flask
+    5. When you wish to, you can ```deactivate```
+3. 
