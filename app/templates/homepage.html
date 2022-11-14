@@ -11,11 +11,11 @@
   {% if username %}
       <a href="{{ url_for('my_blog') }}">My Blog</a>
   {% endif %}
+</h1>
+<h2>
+  All Posts
+</h2>
   {% for blog in blogs %}
-  </h1>
-  <h2>
-    All Posts
-  </h2>
   <h3>
     <a href="/blog/{{blog[2].lower()}}">
       {{ blog[1] }}
