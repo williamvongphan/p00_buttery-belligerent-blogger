@@ -18,6 +18,23 @@ def get(cursor, **kwargs):
     user = cursor.fetchone()
     return user
 
+def get_all(cursor, **kwargs):
+    """
+    Get all users from database
+    :param cursor: Database cursor
+    :param kwargs: User data
+    :return: User data
+    """
+    # Build query
+    query = "SELECT * FROM blogs WHERE "
+    for key, value in kwargs.items():
+        query += "{} = '{}' AND ".format(key, value)
+    query = query[:-5]
+    # Execute query
+    cursor.execute(query)
+    # Get posts
+    users = cursor.fetchall()
+    return users
 
 def create(cursor, **kwargs):
     """

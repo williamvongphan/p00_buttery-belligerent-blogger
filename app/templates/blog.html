@@ -4,6 +4,7 @@
     <title>{{ blog[1] }}</title>
 </head>
 <body>
+<a href="/homepage">Homepage</a>
 {% if user_id == blog[6] %}
     <a href="/blog/{{ blog[0] }}/newpost">New Post</a>
 {% endif %}
@@ -33,6 +34,5 @@
         No posts yet.
     </p>
 {% endif %}
-<a href="/homepage">Homepage</a>
 </body>
 </html>

@@ -1,16 +1,23 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <h1> Buttery Belligerent Bloggers </h1>
+  <h1> Buttery Belligerent Bloggers <br>
+  {% if username %}
+      <a href="{{ url_for('my_blog') }}">My Blog</a>
+  {% endif %}
   {% for blog in blogs %}
-  <h1>
-    <a href="/blog/{{blog[2]}}">
-      {{ blog[1] }}
-    </a>
   </h1>
   <h2>
-      {{ blog[3] }}
+    All Posts
   </h2>
+  <h3>
+    <a href="/blog/{{blog[2].lower()}}">
+      {{ blog[1] }}
+    </a>
+  </h3>
+  <h4>
+      {{ blog[3] }}
+  </h4>
   <p>
       {{ blog[4] }}
   </p>

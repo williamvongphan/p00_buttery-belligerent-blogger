@@ -227,8 +227,10 @@ def homepage():
     username = flask.session.get('username')
     # Get all blogs
     blogs = blog_table.get_all(cursor=connection.cursor())
+    # Get all users
+    users = user_table.get_all(cursor=connection.cursor())
     print(blogs)
-    return render_homepage.build_page(username=username, blogs=blogs)
+    return render_homepage.build_page(username=username, blogs=blogs, users=users)
 
 # Run the app
 if __name__ == '__main__':
