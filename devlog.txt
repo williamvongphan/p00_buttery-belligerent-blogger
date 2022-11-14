@@ -50,3 +50,8 @@
     - Julia Lee:
       - Working on homepage for all users.
       - Working on new post page.
+=========================================================
+
+  2022-11-14:
+    - Julia Lee:
+      - Added page for individual post viewing.
