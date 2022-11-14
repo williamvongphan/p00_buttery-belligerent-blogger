@@ -36,3 +36,17 @@
 			- Create devlog
 			- Major work on login/logout functionality
 			- Basic blog work
+
+==========================================================
+
+  2022-11-11
+    - Julia Lee/ Jeffrey Zou:
+      - Added to readme.
+      - Added to requirements.txt
+
+==========================================================
+
+  2022-11-13:
+    - Julia Lee:
+      - Working on homepage for all users.
+      - Working on new post page.

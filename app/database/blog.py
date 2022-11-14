@@ -44,7 +44,7 @@ def create(cursor, **kwargs):
     return None
 
 
-def update(cursor, id, **kwargs):
+def update(cursor, author, **kwargs):
     """
     Update blog in database
     :param cursor: Database cursor
@@ -56,7 +56,7 @@ def update(cursor, id, **kwargs):
     for key, value in kwargs.items():
         query += "{} = '{}', ".format(key, value)
     query += "updated_at = datetime('now')"
-    query += " WHERE id = {}".format(id)
+    query += " WHERE author = {}".format(author)
     print(query)
     # Execute query
     cursor.execute(query)

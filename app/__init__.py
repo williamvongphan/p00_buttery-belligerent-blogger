@@ -13,6 +13,7 @@ import render.login as render_login
 import render.register as render_register
 import render.onboarding as render_onboarding
 import render.create_blog as render_create_blog
+import render.newpost as render_newpost
 import render.blog as render_blog
 
 app = flask.Flask(__name__)
@@ -179,6 +180,31 @@ def my_blog():
         # Yes
         return flask.redirect(flask.url_for('blog', slug=util.slugify(blog[1])))
 
+@app.route('/blog/<blogid>/newpost', methods=['GET', 'POST'])
+def new_post(blogid):
+    if flask.request.method == 'POST':
+        response = ""
+        username = flask.session.get('username')
+        # Get form database
+        title = flask.request.form['title']
+        description = flask.request.form['description']
+        subtitle = flask.request.form['subtitle']
+        content = flask.request.form['content']
+        #Check if user exists
+        user = user_table.get(cursor=connection.cursor(), username=username)
+        if user is None:
+            # Redirect to login
+            return flask.redirect(flask.url_for('Login'))
+        else:
+            blog = blog_table.get(cursor=connection.cursor(), author=user[0])
+            # Creates post
+            post_table.create(cursor=connection.cursor(), title=title, description=description, subtitle=subtitle, content=content, author=username, blog=blogid, slug=util.slugify(title))
+            # Updates blog so post is most recent post
+            blog_table.update(cursor=connection.cursor(), author=user[0], posts=title)
+            # redirects to page
+            return flask.redirect(flask.url_for('blog', slug=util.slugify(blog[1])))
+    else:
+        return render_newpost.build_page(blogid=blogid)
 
 # Run the app
 if __name__ == '__main__':
