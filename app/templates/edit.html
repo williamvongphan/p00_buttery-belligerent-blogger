@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Create a blog</title>
-    <meta charset="utf-8">
+    <title>Create a post</title>
+<meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="/static/css/page.css">
+    <link rel="stylesheet" href="/static/css/page.css">       
 </head>
 <body>
 <h1>
-    Create a blog
+    Edit a post
 </h1>
 <p>
-    Start editing your blog!
+    Onwards!
 </p>
-<form action="/blog/create" method="post">
+<form action=newpost method="post">
     {% if data %} <!-- If there is data, display it -->
         <p style="color: red;">{{ data }}</p>
     {% endif %}
@@ -27,9 +27,13 @@
     <br>
     <label for="description">New Description</label>
     <br>
-    <textarea name="description" id="description" cols="30" rows="10" required></textarea>
+    <input type="text" name="description" id="description" required>
     <br>
-    <input type="submit" value="Create Blog">
+    <label for="content">New Content</label>
+    <br>
+    <textarea name="content" id="content" cols="30" rows="10" required></textarea>
+    <br>
+    <input type="submit" value="Update Post">
 </form>
 </body>
 </html>

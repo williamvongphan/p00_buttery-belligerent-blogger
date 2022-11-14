@@ -18,6 +18,7 @@ import render.blog as render_blog
 import render.post as render_post
 import render.homepage as render_homepage
 import render.edit as render_edit
+import render.delete as render_delete
 
 
 app = flask.Flask(__name__)
@@ -201,13 +202,13 @@ def new_post(blogid):
             return flask.redirect(flask.url_for('login'))
         else:
             blog = blog_table.get(cursor=connection.cursor(), author=user[0])
-            post_table.update(cursor=connection.cursor(), title=title, description=description, subtitle=subtitle, content=content, author=username, blog=blogid, slug=util.slugify(title))
+            post_table.create(cursor=connection.cursor(), title=title, description=description, subtitle=subtitle, content=content, author=username, blog=blogid, slug=util.slugify(title))
             # Updates blog so post is most recent post
             blog_table.update(cursor=connection.cursor(), author=user[0], posts=title)
             # redirects to page
             return flask.redirect(flask.url_for('blog', slug=util.slugify(blog[1])))
     else:
-        return render_newpost.build_page(blogid=blogid)
+        return render_edit.build_page(blogid=blogid)
 
 @app.route('/blog/<blogid>/<post>')
 def view_post(blogid, post):
@@ -222,7 +223,7 @@ def view_post(blogid, post):
     #Display post page
     return render_post.build_page(username=username, blog=blogid, user_id=user[0], post=post)
 
-@app.route('/blog/<blogid>/<edit>')
+@app.route('/blog/<blogid>/edit', methods=['GET', 'POST'])
 def edit_post(blogid):
     if flask.request.method == 'POST':
         username = flask.session.get('username')
@@ -237,15 +238,33 @@ def edit_post(blogid):
             # Redirect to login
             return flask.redirect(flask.url_for('login'))
         else:
+            #code that actually updates the info in the table
+            return flask.redirect(flask.url_for('blog', slug=util.slugify(blog[0])))
+    else:
+        return render_edit.build_page(blogid=blogid)
+
+@app.route('/blog/<blogid>/delete', methods=['GET', 'POST'])
+def delete_post(blogid):
+    if flask.request.method == 'POST':
+        response = ""
+        username = flask.session.get('username')
+        # Get form database
+        title = flask.request.form['title']
+        description = flask.request.form['description']
+        subtitle = flask.request.form['subtitle']
+        content = flask.request.form['content']
+        #Check if user exists
+        user = user_table.get(cursor=connection.cursor(), username=username)
+        if user is None:
+            # Redirect to login
+            return flask.redirect(flask.url_for('login'))
+        else:
             blog = blog_table.get(cursor=connection.cursor(), author=user[0])
-            # Creates post
-            post_table.create(cursor=connection.cursor(), title=title, description=description, subtitle=subtitle, content=content, author=username, blog=blogid, slug=util.slugify(title))
-            # Updates blog so post is most recent post
-            blog_table.update(cursor=connection.cursor(), author=user[0], posts=title)
-            # redirects to page
+            # code that actually deletes from database
             return flask.redirect(flask.url_for('blog', slug=util.slugify(blog[1])))
     else:
-        return render_newpost.build_page(blogid=blogid)
+        return render_delete.build_page()
+    
     
 
 @app.route('/homepage')
