@@ -16,6 +16,7 @@ import render.create_blog as render_create_blog
 import render.newpost as render_newpost
 import render.blog as render_blog
 import render.post as render_post
+import render.homepage as render_homepage
 
 app = flask.Flask(__name__)
 
@@ -219,6 +220,16 @@ def view_post(blogid, post):
     user = user_table.get(cursor=connection.cursor(), username=username)
     #Display post page
     return render_post.build_page(username=username, blog=blog, user_id=user[0], post=post)
+
+@app.route('/homepage')
+def homepage():
+    # Get username from session
+    username = flask.session.get('username')
+    # Get all blogs
+    blogs = blog_table.get_all(cursor=connection.cursor())
+    print(blogs)
+    return render_homepage.build_page(username=username, blogs=blogs)
+
 # Run the app
 if __name__ == '__main__':
     app.run(

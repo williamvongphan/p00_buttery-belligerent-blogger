@@ -2,6 +2,18 @@
 <html>
 <head>
   <h1> Buttery Belligerent Bloggers </h1>
-
+  {% for blog in blogs %}
+  <h1>
+    <a href="/blog/{{blog[2]}}">
+      {{ blog[1] }}
+    </a>
+  </h1>
+  <h2>
+      {{ blog[3] }}
+  </h2>
+  <p>
+      {{ blog[4] }}
+  </p>
+  {% endfor %}
 </head>
 </html>
