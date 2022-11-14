@@ -161,9 +161,9 @@ def blog(slug):
     # Get posts by blog ID
     posts = post_table.get_all(cursor=connection.cursor(), blog=blog[0])
     # Get user by ID
-    user = user_table.get(cursor=connection.cursor(), username=username)
+    user = user_table.get(cursor=connection.cursor(), username=blog[5])
     # Render blog page
-    return render_blog.build_page(username=username, blog=blog, posts=posts, user=user, user_id=user[0])
+    return render_blog.build_page(username=username, blog=blog, posts=posts, user=user)
 
 
 @app.route('/my_blog')
