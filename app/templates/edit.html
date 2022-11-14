@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create a blog</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/static/css/page.css">
+</head>
+<body>
+<h1>
+    Create a blog
+</h1>
+<p>
+    Start editing your blog!
+</p>
+<form action="/blog/create" method="post">
+    {% if data %} <!-- If there is data, display it -->
+        <p style="color: red;">{{ data }}</p>
+    {% endif %}
+    <label for="title">New Title</label>
+    <br>
+    <input type="text" name="title" id="title" required>
+    <br>
+    <label for="subtitle">New Subtitle</label>
+    <br>
+    <input type="text" name="subtitle" id="subtitle" required>
+    <br>
+    <label for="description">New Description</label>
+    <br>
+    <textarea name="description" id="description" cols="30" rows="10" required></textarea>
+    <br>
+    <input type="submit" value="Create Blog">
+</form>
+</body>
+</html>

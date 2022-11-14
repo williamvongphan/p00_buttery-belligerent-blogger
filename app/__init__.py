@@ -17,6 +17,8 @@ import render.newpost as render_newpost
 import render.blog as render_blog
 import render.post as render_post
 import render.homepage as render_homepage
+import render.edit as render_edit
+
 
 app = flask.Flask(__name__)
 
@@ -196,11 +198,10 @@ def new_post(blogid):
         user = user_table.get(cursor=connection.cursor(), username=username)
         if user is None:
             # Redirect to login
-            return flask.redirect(flask.url_for('Login'))
+            return flask.redirect(flask.url_for('login'))
         else:
             blog = blog_table.get(cursor=connection.cursor(), author=user[0])
-            # Creates post
-            post_table.create(cursor=connection.cursor(), title=title, description=description, subtitle=subtitle, content=content, author=username, blog=blogid, slug=util.slugify(title))
+            post_table.update(cursor=connection.cursor(), title=title, description=description, subtitle=subtitle, content=content, author=username, blog=blogid, slug=util.slugify(title))
             # Updates blog so post is most recent post
             blog_table.update(cursor=connection.cursor(), author=user[0], posts=title)
             # redirects to page
@@ -220,6 +221,32 @@ def view_post(blogid, post):
     user = user_table.get(cursor=connection.cursor(), username=username)
     #Display post page
     return render_post.build_page(username=username, blog=blogid, user_id=user[0], post=post)
+
+@app.route('/blog/<blogid>/<edit>')
+def edit_post(blogid):
+    if flask.request.method == 'POST':
+        username = flask.session.get('username')
+        # Get form database
+        title = flask.request.form['title']
+        description = flask.request.form['description']
+        subtitle = flask.request.form['subtitle']
+        content = flask.request.form['content']
+        #Check if user exists
+        user = user_table.get(cursor=connection.cursor(), username=username)
+        if user is None:
+            # Redirect to login
+            return flask.redirect(flask.url_for('login'))
+        else:
+            blog = blog_table.get(cursor=connection.cursor(), author=user[0])
+            # Creates post
+            post_table.create(cursor=connection.cursor(), title=title, description=description, subtitle=subtitle, content=content, author=username, blog=blogid, slug=util.slugify(title))
+            # Updates blog so post is most recent post
+            blog_table.update(cursor=connection.cursor(), author=user[0], posts=title)
+            # redirects to page
+            return flask.redirect(flask.url_for('blog', slug=util.slugify(blog[1])))
+    else:
+        return render_newpost.build_page(blogid=blogid)
+    
 
 @app.route('/homepage')
 def homepage():

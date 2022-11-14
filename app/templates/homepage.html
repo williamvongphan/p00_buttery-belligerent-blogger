@@ -10,6 +10,7 @@
   <h1> Buttery Belligerent Bloggers <br>
   {% if username %}
       <a href="{{ url_for('my_blog') }}">My Blog</a>
+      <a href="{{ url_for('logout') }}">Logout</a>
   {% endif %}
 </h1>
 <h2>
@@ -20,6 +21,7 @@
     <a href="/blog/{{blog[2].lower()}}">
       {{ blog[1] }}
     </a>
+    <a href="/blog/{{ blog[0] }}/edit">Edit</a>
   </h3>
   <h4>
       {{ blog[3] }}
