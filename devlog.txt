@@ -55,3 +55,12 @@
   2022-11-14:
     - Julia Lee:
       - Added page for individual post viewing.
+=========================================================
+
+  2022-11-14:
+    - Jeffrey Zou:
+      - Rerouted logout button 
+	  - Fixed bug where the login function had a capital L
+	  - setup edit post function
+	  - working on edit post page
+
