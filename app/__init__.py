@@ -15,6 +15,7 @@ import render.onboarding as render_onboarding
 import render.create_blog as render_create_blog
 import render.newpost as render_newpost
 import render.blog as render_blog
+import render.post as render_post
 
 app = flask.Flask(__name__)
 
@@ -206,6 +207,18 @@ def new_post(blogid):
     else:
         return render_newpost.build_page(blogid=blogid)
 
+@app.route('/blog/<blogid>/<post>')
+def view_post(blogid, post):
+    # Get username from session
+    username = flask.session.get('username')
+    #Get blog info by blogid
+    blog = blog_table.get(cursor=connection.cursor(), id=blogid)
+    # Get posts by blog ID
+    post = post_table.get(cursor=connection.cursor(), title=post)
+    # Get user by ID
+    user = user_table.get(cursor=connection.cursor(), username=username)
+    #Display post page
+    return render_post.build_page(username=username, blog=blog, user_id=user[0], post=post)
 # Run the app
 if __name__ == '__main__':
     app.run(
