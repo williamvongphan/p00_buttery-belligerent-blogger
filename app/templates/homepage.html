@@ -1,6 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <title>Home</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/static/css/page.css">
+</head>
+<body>
   <h1> Buttery Belligerent Bloggers <br>
   {% if username %}
       <a href="{{ url_for('my_blog') }}">My Blog</a>
@@ -22,5 +28,5 @@
       {{ blog[4] }}
   </p>
   {% endfor %}
-</head>
+</body>
 </html>

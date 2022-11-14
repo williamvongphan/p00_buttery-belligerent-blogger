@@ -2,6 +2,9 @@
 <html>
 <head>
     <title>Login</title>
+<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/static/css/page.css">       
 </head>
 <body>
 <h1>
@@ -12,15 +15,14 @@
         <p style="color: red;">{{ data }}</p>
     {% endif %}
     <label for="username">Username</label>
+    <br>
     <input type="text" name="username" id="username">
+    <br>
     <label for="password">Password</label>
+    <br>
     <input type="password" name="password" id="password">
+    <br>
     <input type="submit" value="Login">
 </form>
-{% if data %}
-    <form action="/register">
-        <input type="submit" value="Register">
-    </form>
-{% endif %}
 </body>
 </html>

@@ -219,7 +219,7 @@ def view_post(blogid, post):
     # Get user by ID
     user = user_table.get(cursor=connection.cursor(), username=username)
     #Display post page
-    return render_post.build_page(username=username, blog=blog, user_id=user[0], post=post)
+    return render_post.build_page(username=username, blog=blogid, user_id=user[0], post=post)
 
 @app.route('/homepage')
 def homepage():

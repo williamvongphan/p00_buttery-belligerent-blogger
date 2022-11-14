@@ -2,6 +2,9 @@
 <html>
 <head>
     <title>Create a post</title>
+<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/static/css/page.css">       
 </head>
 <body>
 <h1>
@@ -15,13 +18,21 @@
         <p style="color: red;">{{ data }}</p>
     {% endif %}
     <label for="title">Post Title</label>
+    <br>
     <input type="text" name="title" id="title" required>
+    <br>
     <label for="subtitle">Post Subtitle</label>
+    <br>
     <input type="text" name="subtitle" id="subtitle" required>
+    <br>
     <label for="description">Post Description</label>
+    <br>
     <input type="text" name="description" id="description" required>
+    <br>
     <label for="content">Post Content</label>
-    <input type="text" name="content" id="content" required>
+    <br>
+    <textarea name="content" id="content" cols="30" rows="10" required></textarea>
+    <br>
     <input type="submit" value="Create Post">
 </form>
 </body>

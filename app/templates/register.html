@@ -2,6 +2,9 @@
 <html>
 <head>
     <title>Register</title>
+<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/static/css/page.css">       
 </head>
 <body>
 <h1>
@@ -11,14 +14,23 @@
     {% if data %} <!-- If there is data, display it -->
         <p style="color: red;">{{ data }}</p>
     {% endif %}
+    <br>
     <label for="username">Username</label>
+    <br>
     <input type="text" name="username" id="username">
+    <br>
     <label for="email">Email</label>
+    <br>
     <input type="email" name="email" id="email">
+    <br>
     <label for="password">Password</label>
+    <br>
     <input type="password" name="password" id="password">
+    <br>
     <label for="password2">Confirm Password</label>
+    <br>
     <input type="password" name="password2" id="password2">
+    <br>
     <input type="submit" value="Register">
 </form>
 </body>
