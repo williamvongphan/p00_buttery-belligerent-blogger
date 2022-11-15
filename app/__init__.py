@@ -208,7 +208,7 @@ def new_post(blogid):
             # redirects to page
             return flask.redirect(flask.url_for('blog', slug=util.slugify(blog[1])))
     else:
-        return render_edit.build_page(blogid=blogid)
+        return render_newpost.build_page(blogid=blogid)
 
 @app.route('/blog/<blogid>/<post>')
 def view_post(blogid, post):
@@ -261,9 +261,10 @@ def delete_post(blogid):
         else:
             blog = blog_table.get(cursor=connection.cursor(), author=user[0])
             # code that actually deletes from database
+            blog_table.delete(cursor=connection.cursor, blogs= blogid )
             return flask.redirect(flask.url_for('blog', slug=util.slugify(blog[1])))
     else:
-        return render_delete.build_page()
+        return render_edit.build_page(blogid=blogid)
     
     
 

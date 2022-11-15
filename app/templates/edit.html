@@ -13,7 +13,7 @@
 <p>
     Onwards!
 </p>
-<form action=newpost method="post">
+<form action=edit method="post">
     {% if data %} <!-- If there is data, display it -->
         <p style="color: red;">{{ data }}</p>
     {% endif %}
@@ -34,6 +34,9 @@
     <textarea name="content" id="content" cols="30" rows="10" required></textarea>
     <br>
     <input type="submit" value="Update Post">
+</form>
+<form action="/delete" method="post">
+    <input type="submit" name="sub2" value="Delete Post">
 </form>
 </body>
 </html>

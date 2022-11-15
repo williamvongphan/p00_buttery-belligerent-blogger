@@ -59,8 +59,8 @@
 
   2022-11-14:
     - Jeffrey Zou:
-      - Rerouted logout button 
-	  - Fixed bug where the login function had a capital L
-	  - setup edit post function
-	  - working on edit post page
+    - Rerouted logout button 
+	- Fixed bug where the login function had a capital L
+	- setup update post function and delete post function
+	- working on edit post page
 
