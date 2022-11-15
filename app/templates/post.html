@@ -24,10 +24,11 @@
     {{ post[4] }}
 </h4>
 <div id="post-content">
+    {{ post[5] }}
 </div>
 <script>
     // Get the post content inner HTML
-    let postContent = `{{ post[5] }}`;
+    let postContent = document.getElementById("post-content").innerHTML;
     fetch("http://1.mcdns.me:3000", {
             method: "POST",
             body: postContent
