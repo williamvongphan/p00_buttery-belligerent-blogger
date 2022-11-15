@@ -375,13 +375,13 @@ def explore():
     print(blogs)
     return render_homepage.build_page(username=username, blogs=blogs, users=users)
 
-# @app.errorhandler(404)
-# def page_not_found(e):
-#     return render_404.build_page(), 404
-#
-# @app.errorhandler(500)
-# def internal_server_error(e):
-#     return render_500.build_page(), 500
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_404.build_page(), 404
+
+@app.errorhandler(500)
+def internal_server_error(e):
+    return render_500.build_page(), 500
 
 # Run the app
 if __name__ == '__main__':
