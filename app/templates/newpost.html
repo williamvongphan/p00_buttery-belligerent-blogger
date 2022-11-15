@@ -2,9 +2,9 @@
 <html>
 <head>
     <title>Create a post</title>
-<meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="/static/css/page.css">       
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <link href="/static/css/page.css" rel="stylesheet">
 </head>
 <body>
 <h1>
@@ -15,25 +15,95 @@
 </p>
 <form action=newpost method="post">
     {% if data %} <!-- If there is data, display it -->
-        <p style="color: red;">{{ data }}</p>
+    <p style="color: red;">{{ data }}</p>
     {% endif %}
     <label for="title">Post Title</label>
     <br>
-    <input type="text" name="title" id="title" required>
+    <input id="title" name="title" required type="text">
     <br>
     <label for="subtitle">Post Subtitle</label>
     <br>
-    <input type="text" name="subtitle" id="subtitle" required>
+    <input id="subtitle" name="subtitle" required type="text">
     <br>
     <label for="description">Post Description</label>
     <br>
-    <input type="text" name="description" id="description" required>
+    <input id="description" name="description" required type="text">
     <br>
-    <label for="content">Post Content</label>
+    <label for="content">Post Content (GFM supported)</label>
     <br>
-    <textarea name="content" id="content" cols="30" rows="10" required></textarea>
+    <textarea cols="30" id="content" name="content" required rows="10"></textarea>
     <br>
+    <div>
+        <h2>Post entry preview</h2>
+        <!-- Post preview -->
+        <div class="blog-container">
+            <h3>
+                <a href="#" id="entry-preview-url">
+                    <span id="entry-preview-title"></span>
+                </a>
+            </h3>
+            <p>
+                <span id="entry-preview-subtitle"> </span>
+            </p>
+        </div>
+        <h2>Post page preview</h2>
+        <!-- Post preview -->
+        <div class="blog-container">
+            <h1>
+                <span id="page-preview-title"></span>
+            </h1>
+            <h2>
+                <span id="page-preview-author"></span>
+            </h2>
+            <h3>
+                <span id="page-preview-subtitle"></span>
+            </h3>
+            <h4>
+                <span id="page-preview-description"></span>
+            </h4>
+            <div id="page-preview-content">
+            </div>
+        </div>
+    </div>
     <input type="submit" value="Create Post">
 </form>
+<script>
+    // Markdown server url = http://1.mcdns.me:3000
+    // Render the markdown into HTML that is displayed so the user can see what it will look like
+    function renderPreview() {
+        let content = document.getElementById("content").value;
+        // Set the preview values
+        // Render the markdown (request with no cors)
+        fetch("http://1.mcdns.me:3000", {
+            method: "POST",
+            body: content
+        }).then(function(response) {
+            return response.text();
+        }).then(function(text) {
+            document.getElementById("page-preview-content").innerHTML = text;
+        });
+    }
+
+    function renderInputs () {
+        // Get all text inputs
+        let title = document.getElementById("title").value;
+        let subtitle = document.getElementById("subtitle").value;
+        let description = document.getElementById("description").value;
+        // Set the preview values
+        document.getElementById("entry-preview-title").innerHTML = title;
+        document.getElementById("entry-preview-subtitle").innerHTML = subtitle;
+        document.getElementById("page-preview-title").innerHTML = title;
+        document.getElementById("page-preview-subtitle").innerHTML = subtitle;
+        document.getElementById("page-preview-description").innerHTML = description;
+    }
+
+    // Add an event listener to all text inputs
+    let inputs = document.getElementsByTagName("input");
+    for (let i = 0; i < inputs.length; i++) {
+        inputs[i].addEventListener("input", renderInputs);
+    }
+    // Add an event listener to the textarea (when there is a change)
+    document.getElementById("content").addEventListener("change", renderPreview);
+</script>
 </body>
 </html>

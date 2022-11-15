@@ -33,10 +33,94 @@
     <br>
     <textarea name="content" id="content" cols="30" rows="10" required>{{ post[5] }}</textarea>
     <br>
+    <div>
+        <h2>Post entry preview</h2>
+        <!-- Post preview -->
+        <div class="blog-container">
+            <h3>
+                <a href="#" id="entry-preview-url">
+                    <span id="entry-preview-title"></span>
+                </a>
+            </h3>
+            <p>
+                <span id="entry-preview-subtitle"> </span>
+            </p>
+        </div>
+        <h2>Post page preview</h2>
+        <!-- Post preview -->
+        <div class="blog-container">
+            <h1>
+                <span id="page-preview-title"></span>
+            </h1>
+            <h2>
+                <span id="page-preview-author"></span>
+            </h2>
+            <h3>
+                <span id="page-preview-subtitle"></span>
+            </h3>
+            <h4>
+                <span id="page-preview-description"></span>
+            </h4>
+            <div id="page-preview-content">
+            </div>
+        </div>
+    </div>
     <input type="submit" value="Update Post">
 </form>
 <form action="/delete" method="post">
     <input type="submit" name="sub2" value="Delete Post">
 </form>
+<script>
+    // Markdown server url = http://1.mcdns.me:3000
+    // Render the markdown into HTML that is displayed so the user can see what it will look like
+    function renderPreview() {
+        let content = document.getElementById("content").value;
+        // Set the preview values
+        // Render the markdown (request with no cors)
+        fetch("http://1.mcdns.me:3000", {
+            method: "POST",
+            body: content
+        }).then(function(response) {
+            return response.text();
+        }).then(function(text) {
+            document.getElementById("page-preview-content").innerHTML = text;
+        });
+    }
+
+    function renderInputs () {
+        // Get all text inputs
+        let title = document.getElementById("title").value;
+        let subtitle = document.getElementById("subtitle").value;
+        let description = document.getElementById("description").value;
+        // Set the preview values
+        document.getElementById("entry-preview-title").innerHTML = title;
+        document.getElementById("entry-preview-subtitle").innerHTML = subtitle;
+        document.getElementById("page-preview-title").innerHTML = title;
+        document.getElementById("page-preview-subtitle").innerHTML = subtitle;
+        document.getElementById("page-preview-description").innerHTML = description;
+    }
+
+    // Add an event listener to all text inputs
+    let inputs = document.getElementsByTagName("input");
+    for (let i = 0; i < inputs.length; i++) {
+        inputs[i].addEventListener("input", renderInputs);
+    }
+    // Add an event listener to the textarea (when there is a change)
+    document.getElementById("content").addEventListener("change", renderPreview);
+
+    // Update the preview
+    renderInputs();
+    renderPreview();
+
+    let postContent = document.getElementById("content").value;
+    fetch("http://1.mcdns.me:3000", {
+            method: "POST",
+            body: postContent
+        }).then(function(response) {
+            return response.text();
+        }).then(function(text) {
+            document.getElementById("post-content").innerHTML = text;
+        });
+</script>
 </body>
 </html>

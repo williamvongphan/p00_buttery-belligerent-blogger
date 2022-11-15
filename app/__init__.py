@@ -207,9 +207,7 @@ def new_post(blog_slug):
             return flask.redirect(flask.url_for('login'))
         else:
             blog = blog_table.get(cursor=connection.cursor(), slug=blog_slug)
-            post_table.create(cursor=connection.cursor(), title=title, description=description, subtitle=subtitle, content=content, author=username, blog=blog_slug, slug=util.slugify(title))
-            # Updates blog so post is most recent post
-            blog_table.update(cursor=connection.cursor(), author=user[0], posts=title)
+            post_table.create(cursor=connection.cursor(), title=title, description=description, subtitle=subtitle, content=content, author=username, blog=blog[0], slug=util.slugify(title))
             # redirects to page
             return flask.redirect(flask.url_for('blog', slug=util.slugify(blog[1])))
     else:
@@ -392,6 +390,10 @@ def page_not_found(e):
 
 @app.errorhandler(500)
 def internal_server_error(e):
+    return render_500.build_page(), 500
+
+@app.errorhandler(Exception)
+def unhandled_exception(e):
     return render_500.build_page(), 500
 
 # Run the app

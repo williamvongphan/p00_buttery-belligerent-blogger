@@ -23,9 +23,19 @@
 <h4>
     {{ post[4] }}
 </h4>
-<p>
-    {{ post[5] }}
-</p>
-
+<div id="post-content">
+</div>
+<script>
+    // Get the post content inner HTML
+    let postContent = `{{ post[5] }}`;
+    fetch("http://1.mcdns.me:3000", {
+            method: "POST",
+            body: postContent
+        }).then(function(response) {
+            return response.text();
+        }).then(function(text) {
+            document.getElementById("post-content").innerHTML = text;
+        });
+</script>
 </body>
 </html>
