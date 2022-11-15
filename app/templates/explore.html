@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Home</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/static/css/page.css">
+</head>
+<body>
+  <h1> Buttery Belligerent Bloggers</h1>
+  {% if username %}
+    <button onclick="window.location.href='/logout'">Logout</button>
+{% endif %}
+<!-- Jinja template code, if user is not logged in, show the login button -->
+{% if not username %}
+    <button onclick="window.location.href='/login'">Login</button>
+    <button onclick="window.location.href='/register'">Register</button>
+{% endif %}
+
+{% if username %}
+    <button onclick="window.location.href='/my_blog'">View my blog</button>
+{% endif %}
+<h2>
+  All Posts
+</h2>
+  {% for blog in blogs %}
+  <div class="blog-container">
+      <h3>
+    <a href="/blog/{{blog[2].lower()}}">
+      {{ blog[1] }}
+    </a>
+  </h3>
+  <h4>
+      {{ blog[3] }}
+  </h4>
+  <p>
+      {{ blog[4] }}
+  </p>
+  </div>
+  {% endfor %}
+</body>
+</html>

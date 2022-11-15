@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit blog</title>
+<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/static/css/page.css">
+</head>
+<body>
+<h1>
+    Edit a blog
+</h1>
+<p>
+    Onwards!
+</p>
+<form action="edit" method="post">
+    {% if data %} <!-- If there is data, display it -->
+        <p style="color: red;">{{ data }}</p>
+    {% endif %}
+    <label for="title">New Title</label>
+    <br>
+    <input type="text" name="title" id="title" value="{{ blog[1] }}" required disabled>
+    <br>
+    <label for="subtitle">New Subtitle</label>
+    <br>
+    <input type="text" name="subtitle" id="subtitle" value="{{ blog[3] }}" required>
+    <br>
+    <label for="description">New Description</label>
+    <br>
+    <input type="text" name="description" id="description" value="{{ blog[4] }}" required>
+    <br>
+    <input type="submit" value="Update blog">
+</form>
+<form action="/delete" method="post">
+    <input type="submit" name="sub2" value="Delete Blog">
+</form>
+</body>
+</html>

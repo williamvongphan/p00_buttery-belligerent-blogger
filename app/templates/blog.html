@@ -7,8 +7,11 @@
     <link rel="stylesheet" href="/static/css/page.css">
 </head>
 <body>
-<a href="/homepage">Homepage</a>
-    <a href="/blog/{{ blog[0] }}/newpost">New Post</a>
+<button onclick="window.location.href='/explore'">Back to Explore</button>
+{% if user[0] == blog[6] %}
+    <button onclick="window.location.href='/blog/{{blog[2]}}/newpost'">New Post</button>
+    <button onclick="window.location.href='/blog/{{blog[2]}}/edit'">Edit blog</button>
+{% endif %}
 <h1>
     {{ blog[1] }}
 </h1>
@@ -21,15 +24,16 @@
 <!-- For each post in the blog, display the title and the content -->
 {% if blog[5] %}
 {% for post in posts %}
-    <h3>
-      <a href="/post/{{blog[0]}}/{{post[1]}}">
+    <div class="blog-container">
+        <h3>
+      <a href="/blog/{{blog[2]}}/{{post[2]}}">
         {{ post[1] }}
       </a>
-      <a href="/post/{{ blog[0] }}/edit">Edit</a>
     </h3>
     <p>
         {{ post[3] }}
     </p>
+    </div>
 {% endfor %}
 {% else %}
     <p>

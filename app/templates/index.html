@@ -21,15 +21,16 @@
 </p>
 <!-- Jinja template code, if user is logged in, show the logout button -->
 {% if username %}
-    <a href="{{ url_for('logout') }}">Logout</a>
+    <button onclick="window.location.href='/logout'">Logout</button>
 {% endif %}
 <!-- Jinja template code, if user is not logged in, show the login button -->
 {% if not username %}
-    <a href="{{ url_for('login') }}">Login</a>
-    <a href="{{ url_for('register') }}">Register</a>
+    <button onclick="window.location.href='/login'">Login</button>
+    <button onclick="window.location.href='/register'">Register</button>
 {% endif %}
 
 {% if username %}
-    <a href="{{ url_for('my_blog') }}">My Blog</a>
+    <button onclick="window.location.href='/my_blog'">View Blogs</button>
 {% endif %}
+<button onclick="window.location.href='/explore'">Explore Blogs</button>
 </body>

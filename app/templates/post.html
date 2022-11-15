@@ -7,19 +7,22 @@
     <link rel="stylesheet" href="/static/css/page.css">       
 </head>
 <body>
-{% if user_id == blog[6] %}
-    <a href="/blog/{{ blog[0] }}/newpost">New Post</a>
-    <a href="/blog/{{blog[1].lower()}}">Back to Blog</a>
+<button onclick="window.location.href='/blog/{{blog[2]}}'">Back to blog</button>
+{% if user[0] == blog[6] %}
+    <button onclick="window.location.href='/blog/{{blog[2]}}/{{post[2]}}/edit'">Edit</button>
 {% endif %}
 <h1>
     {{ post[1] }}
 </h1>
 <h2>
-    {{ post[3] }}
+    By {{ blog_user[4] }} {{ blog_user[5] }}
 </h2>
 <h3>
-    {{ post[4] }}
+    {{ post[3] }}
 </h3>
+<h4>
+    {{ post[4] }}
+</h4>
 <p>
     {{ post[5] }}
 </p>

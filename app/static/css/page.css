@@ -1687,3 +1687,19 @@ body > footer {
     text-decoration: underline;
   }
 }
+
+.blog-container {
+    padding: 0px 20px;
+  border: 1px solid #000000;
+  border-radius: 10px;
+  margin: 10px 0;
+}
+
+@media (prefers-color-scheme: dark) {
+  .blog-container {
+    border: 1px solid #fff;
+    padding: 0px 20px;
+    border-radius: 10px;
+    margin: 10px 0;
+  }
+}

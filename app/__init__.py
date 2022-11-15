@@ -17,9 +17,12 @@ import render.newpost as render_newpost
 import render.blog as render_blog
 import render.post as render_post
 import render.homepage as render_homepage
-import render.edit as render_edit
-import render.delete as render_delete
-
+import render.edit_post as render_edit_post
+import render.delete_post as render_delete_post
+import render.edit_blog as render_edit_blog
+import render.delete_blog as render_delete_blog
+import render.four_oh_four as render_404
+import render.five_hundred as render_500
 
 app = flask.Flask(__name__)
 
@@ -161,10 +164,12 @@ def blog(slug):
     username = flask.session.get('username')
     # Get blog by slug
     blog = blog_table.get(cursor=connection.cursor(), slug=slug)
+    if blog is None:
+        return flask.abort(404)
     # Get posts by blog ID
     posts = post_table.get_all(cursor=connection.cursor(), blog=blog[0])
     # Get user by ID
-    user = user_table.get(cursor=connection.cursor(), username=blog[5])
+    user = user_table.get(cursor=connection.cursor(), username=username)
     # Render blog page
     return render_blog.build_page(username=username, blog=blog, posts=posts, user=user)
 
@@ -233,17 +238,24 @@ def view_post(blog_slug, post_slug):
     username = flask.session.get('username')
     #Get blog info by blogid
     blog = blog_table.get(cursor=connection.cursor(), slug=blog_slug)
+    # get blog owner's info
+    blog_user = user_table.get(cursor=connection.cursor(), id=blog[6])
     # Get posts by blog ID
     post = post_table.get(cursor=connection.cursor(), slug=post_slug)
+    if post is None:
+        # Render 404 page
+        return flask.abort(404)
     # Get user by ID
     user = user_table.get(cursor=connection.cursor(), username=username)
     #Display post page
-    return render_post.build_page(username=username, blog=blog, user_id=user[0], post=post)
+    return render_post.build_page(username=username, blog=blog, post=post, user=user, blog_user=blog_user)
 
-@app.route('/post/<postid>/edit', methods=['GET', 'POST'])
-def edit_post(postid):
+@app.route('/blog/<blog_slug>/<post_slug>/edit', methods=['GET', 'POST'])
+def edit_post(blog_slug, post_slug):
+    # get blog
+    blog = blog_table.get(cursor=connection.cursor(), slug=blog_slug)
     # get post
-    post = post_table.get(cursor=connection.cursor(), id=postid)
+    post = post_table.get(cursor=connection.cursor(), slug=post_slug, blog=blog[0])
     if flask.request.method == 'POST':
         username = flask.session.get('username')
         # Get form database
@@ -258,11 +270,13 @@ def edit_post(postid):
             # Redirect to login
             return flask.redirect(flask.url_for('login'))
         else:
-            if user[1] != post[4]:
+            if user[1] != post[6]:
                 # return forbidden error
-                print(user[1])
-                print(post)
-                return flask.abort(403)
+                return flask.render_template('403.html'), 403
+            else:
+                post_table.update(cursor=connection.cursor(), title=title, description=description, subtitle=subtitle, content=content, slug=util.slugify(title), id=post[0])
+                # redirects to page
+                return flask.redirect(flask.url_for('view_post', blog_slug=blog_slug, post_slug=util.slugify(title)))
     else:
         # check if user is logged in
         if 'username' not in flask.session:
@@ -270,12 +284,56 @@ def edit_post(postid):
             return flask.redirect(flask.url_for('login'))
         else:
             # check if user is author
-            if flask.session['username'] != post[4]:
+            if flask.session['username'] != post[6]:
+                print(flask.session['username'])
+                print(post[6])
                 # render forbidden page template with 403 status code
                 return flask.render_template('403.html'), 403
             else:
                 # render edit page
-                return render_edit.build_page(post=post, postid=postid)
+                return render_edit_post.build_page(post=post, postid=post_slug)
+
+
+@app.route('/blog/<blog_slug>/edit', methods=['GET', 'POST'])
+def edit_blog(blog_slug):
+    # get blog
+    blog = blog_table.get(cursor=connection.cursor(), slug=blog_slug)
+    # get user from session
+    username = flask.session.get('username')
+    # get user from database
+    user = user_table.get(cursor=connection.cursor(), username=username)
+    if flask.request.method == 'POST':
+        username = flask.session.get('username')
+        # Get form database
+        description = flask.request.form['description']
+        subtitle = flask.request.form['subtitle']
+        #Check if user exists
+        user = user_table.get(cursor=connection.cursor(), username=username)
+        # get post
+        if user is None:
+            # Redirect to login
+            return flask.redirect(flask.url_for('login'))
+        else:
+            if user[0] != blog[6]:
+                # return forbidden error
+                return flask.render_template('403.html'), 403
+            else:
+                blog_table.update(cursor=connection.cursor(), title=blog[1], description=description, subtitle=subtitle, slug=util.slugify(blog[1]), id=blog[0], author=blog[6])
+                # redirects to page
+                return flask.redirect(flask.url_for('blog', slug=blog_slug))
+    else:
+        # check if user is logged in
+        if 'username' not in flask.session:
+            # Redirect to login
+            return flask.redirect(flask.url_for('login'))
+        else:
+            # check if user is author
+            if user[0] != blog[6]:
+                # render forbidden page template with 403 status code
+                return flask.render_template('403.html'), 403
+            else:
+                # render edit page
+                return render_edit_blog.build_page(blog=blog, blogid=blog_slug)
 
 @app.route('/post/<postid>/delete', methods=['GET', 'POST'])
 def delete_post(postid):
@@ -317,8 +375,8 @@ def delete_post(postid):
     
     
 
-@app.route('/homepage')
-def homepage():
+@app.route('/explore')
+def explore():
     # Get username from session
     username = flask.session.get('username')
     # Get all blogs
@@ -327,6 +385,14 @@ def homepage():
     users = user_table.get_all(cursor=connection.cursor())
     print(blogs)
     return render_homepage.build_page(username=username, blogs=blogs, users=users)
+
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_404.build_page(), 404
+
+@app.errorhandler(500)
+def internal_server_error(e):
+    return render_500.build_page(), 500
 
 # Run the app
 if __name__ == '__main__':
