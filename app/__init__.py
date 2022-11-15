@@ -318,7 +318,7 @@ def edit_blog(blog_slug):
                 # return forbidden error
                 return flask.render_template('403.html'), 403
             else:
-                blog_table.update(cursor=connection.cursor(), title=blog[1], description=description, subtitle=subtitle, slug=util.slugify(blog[1]), id=blog[0], author=blog[6])
+                blog_table.update(cursor=connection.cursor(), title=blog[1], description=description, subtitle=subtitle, slug=util.slugify(blog[1]), author=blog[6])
                 # redirects to page
                 return flask.redirect(flask.url_for('blog', slug=blog_slug))
     else:
