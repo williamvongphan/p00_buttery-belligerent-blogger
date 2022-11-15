@@ -50,6 +50,9 @@ def create(cursor, **kwargs):
     # add created_at and updated_at
     query += "created_at, updated_at) VALUES ("
     for key, value in kwargs.items():
+        # escape single quotes
+        if type(value) == str:
+            value = value.replace("'", "''")
         query += "'{}', ".format(value)
     # add created_at and updated_at
     query += "datetime('now'), datetime('now'))"
@@ -71,6 +74,8 @@ def update(cursor, author, **kwargs):
     # Build query
     query = "UPDATE blogs SET "
     for key, value in kwargs.items():
+        if type(value) == str:
+            value = value.replace("'", "''")
         query += "{} = '{}', ".format(key, value)
     query += "updated_at = datetime('now')"
     query += " WHERE author = {}".format(author)

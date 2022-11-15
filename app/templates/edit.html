@@ -13,25 +13,25 @@
 <p>
     Onwards!
 </p>
-<form action=edit method="post">
+<form action="edit" method="post">
     {% if data %} <!-- If there is data, display it -->
         <p style="color: red;">{{ data }}</p>
     {% endif %}
     <label for="title">New Title</label>
     <br>
-    <input type="text" name="title" id="title" required>
+    <input type="text" name="title" id="title" value="{{ post[1] }}" required>
     <br>
     <label for="subtitle">New Subtitle</label>
     <br>
-    <input type="text" name="subtitle" id="subtitle" required>
+    <input type="text" name="subtitle" id="subtitle" value="{{ post[3] }}" required>
     <br>
     <label for="description">New Description</label>
     <br>
-    <input type="text" name="description" id="description" required>
+    <input type="text" name="description" id="description" value="{{ post[2] }}" required>
     <br>
     <label for="content">New Content</label>
     <br>
-    <textarea name="content" id="content" cols="30" rows="10" required></textarea>
+    <textarea name="content" id="content" cols="30" rows="10" required>{{ post[4] }}</textarea>
     <br>
     <input type="submit" value="Update Post">
 </form>
