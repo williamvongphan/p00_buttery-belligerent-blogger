@@ -256,6 +256,10 @@ def edit_post(blog_slug, post_slug):
     blog = blog_table.get(cursor=connection.cursor(), slug=blog_slug)
     # get post
     post = post_table.get(cursor=connection.cursor(), slug=post_slug, blog=blog[0])
+    # get user from session
+    username = flask.session.get('username')
+    # get user from database
+    user = user_table.get(cursor=connection.cursor(), username=username)
     if flask.request.method == 'POST':
         username = flask.session.get('username')
         # Get form database
@@ -284,7 +288,7 @@ def edit_post(blog_slug, post_slug):
             return flask.redirect(flask.url_for('login'))
         else:
             # check if user is author
-            if flask.session['username'] != post[6]:
+            if user[0] != post[6]:
                 print(flask.session['username'])
                 print(post[6])
                 # render forbidden page template with 403 status code
