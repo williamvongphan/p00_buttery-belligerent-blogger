@@ -274,7 +274,7 @@ def edit_post(blog_slug, post_slug):
             # Redirect to login
             return flask.redirect(flask.url_for('login'))
         else:
-            if user[1] != post[6]:
+            if user[0] != post[6]:
                 # return forbidden error
                 return flask.render_template('403.html'), 403
             else:
