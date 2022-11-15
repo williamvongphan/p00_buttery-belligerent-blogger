@@ -394,6 +394,7 @@ def internal_server_error(e):
 
 @app.errorhandler(Exception)
 def unhandled_exception(e):
+    print(e)
     return render_500.build_page(), 500
 
 # Run the app

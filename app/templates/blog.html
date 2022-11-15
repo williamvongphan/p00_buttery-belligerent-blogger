@@ -22,7 +22,7 @@
     {{ blog[4] }}
 </p>
 <!-- For each post in the blog, display the title and the content -->
-{% if blog[5] %}
+{% if posts|length > 0 %}
 {% for post in posts %}
     <div class="blog-container">
         <h3>
