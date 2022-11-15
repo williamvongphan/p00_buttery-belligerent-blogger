@@ -23,12 +23,20 @@
 <h4>
     {{ post[4] }}
 </h4>
-<div id="post-content">
-    {{ post[5] }}
+<div id="post-content">{{ post[5] }}
 </div>
 <script>
     // Get the post content inner HTML
     let postContent = document.getElementById("post-content").innerHTML;
+    // Replace &lt; and &gt; with < and > respectively
+    postContent = postContent.replace(/&lt;/g, "<");
+    postContent = postContent.replace(/&gt;/g, ">");
+    // Replace &amp; with &
+    postContent = postContent.replace(/&amp;/g, "&");
+    // Replace &quot; with "
+    postContent = postContent.replace(/&quot;/g, '"');
+    // Replace &#39; with '
+    postContent = postContent.replace(/&#39;/g, "'");
     fetch("http://1.mcdns.me:3000", {
             method: "POST",
             body: postContent
