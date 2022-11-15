@@ -207,7 +207,7 @@ def new_post(blog_slug):
             return flask.redirect(flask.url_for('login'))
         else:
             blog = blog_table.get(cursor=connection.cursor(), slug=blog_slug)
-            post_table.create(cursor=connection.cursor(), title=title, description=description, subtitle=subtitle, content=content, author=username, blog=blog_slug, slug=util.slugify(title))
+            post_table.create(cursor=connection.cursor(), title=title, description=description, subtitle=subtitle, content=content, author=user[0], blog=blog[0], slug=util.slugify(title))
             # Updates blog so post is most recent post
             blog_table.update(cursor=connection.cursor(), author=user[0], posts=title)
             # redirects to page
@@ -372,8 +372,8 @@ def delete_post(postid):
             else:
                 # render delete page
                 return render_delete.build_page()
-    
-    
+
+
 
 @app.route('/explore')
 def explore():
