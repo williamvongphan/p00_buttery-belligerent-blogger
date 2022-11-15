@@ -339,43 +339,28 @@ def edit_blog(blog_slug):
                 # render edit page
                 return render_edit_blog.build_page(blog=blog, blogid=blog_slug)
 
-@app.route('/post/<postid>/delete', methods=['GET', 'POST'])
-def delete_post(postid):
-    if flask.request.method == 'POST':
-        response = ""
-        username = flask.session.get('username')
-        # Get form database
-        title = flask.request.form['title']
-        description = flask.request.form['description']
-        subtitle = flask.request.form['subtitle']
-        content = flask.request.form['content']
-        #Check if user exists
-        user = user_table.get(cursor=connection.cursor(), username=username)
-        if user is None:
-            # Redirect to login
-            return flask.redirect(flask.url_for('login'))
-        else:
-            if user[0] != post[4]:
-                # return forbidden error
-                return flask.abort(403)
-            else:
-                blog = blog_table.get(cursor=connection.cursor(), author=user[0])
-                # code that actually deletes from database
-                blog_table.delete(cursor=connection.cursor, blogs=postid)
-                return flask.redirect(flask.url_for('blog', slug=util.slugify(blog[1])))
+@app.route('/blog/<blog_slug>/<post_slug>/delete', methods=['GET', 'POST'])
+def delete_post(blog_slug, post_slug):
+    # get blog
+    blog = blog_table.get(cursor=connection.cursor(), slug=blog_slug)
+    # get post
+    post = post_table.get(cursor=connection.cursor(), slug=post_slug, blog=blog[0])
+    # get user from session
+    username = flask.session.get('username')
+    # get user from database
+    user = user_table.get(cursor=connection.cursor(), username=username)
+    if user is None:
+        # Redirect to login
+        return flask.redirect(flask.url_for('login'))
     else:
-        # check if user is logged in
-        if 'username' not in flask.session:
-            # Redirect to login
-            return flask.redirect(flask.url_for('login'))
+        if user[0] != post[6]:
+            # return forbidden error
+            return flask.abort(403)
         else:
-            # check if user is author
-            if flask.session['username'] != post[4]:
-                # return forbidden error
-                return flask.abort(403)
-            else:
-                # render delete page
-                return render_delete.build_page()
+            blog = blog_table.get(cursor=connection.cursor(), author=user[0])
+            # code that actually deletes from database
+            post_table.delete(cursor=connection.cursor(), slug=post_slug)
+            return flask.redirect(flask.url_for('blog', slug=util.slugify(blog[1])))
 
 
 
@@ -390,13 +375,13 @@ def explore():
     print(blogs)
     return render_homepage.build_page(username=username, blogs=blogs, users=users)
 
-@app.errorhandler(404)
-def page_not_found(e):
-    return render_404.build_page(), 404
-
-@app.errorhandler(500)
-def internal_server_error(e):
-    return render_500.build_page(), 500
+# @app.errorhandler(404)
+# def page_not_found(e):
+#     return render_404.build_page(), 404
+#
+# @app.errorhandler(500)
+# def internal_server_error(e):
+#     return render_500.build_page(), 500
 
 # Run the app
 if __name__ == '__main__':
